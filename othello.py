@@ -56,3 +56,39 @@ def legal_moves(player, board):
 
 def any_legal_move(player, board):
     return any(is_legal(sq, player, board) for sq in squares())
+
+def play(black_strategy, white_strategy):
+    board = initial_board()
+    player = BLACK
+    strategy = lambda who: black_strategy if who == BLACK else white_strategy
+    while player is not None:
+        move = get_move(strategy(player), player, board)
+        make_move(move, player, board)
+        player = next_player(board, player)
+    return board, score(BLACK, board)
+
+def next_player(board, prev_player):
+
+    opp = opponent(prev_player)
+    if any_legal_move(opp, board):
+        return opp
+    elif any_legal_move(prev_player, board):
+        return prev_player
+    return None
+
+def get_move(strategy, player, board):
+
+    copy = list(board) # copy the board to prevent cheating
+    move = strategy(player, copy)
+    if not is_valid(move) or not is_legal(move, player, board):
+        raise IllegalMoveError(player, move, copy)
+    return move
+
+def score(player, board):
+    mine, theirs = 0, 0
+    opp = opponent(player)
+    for sq in squares():
+        piece = board[sq]
+        if piece == player: mine += 1
+        elif piece == opp: theirs += 1
+    return mine - theirs
