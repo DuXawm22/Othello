@@ -104,3 +104,16 @@ def maximizer(evaluate):
             return evaluate(player, make_move(move, player, list(board)))
         return max(legal_moves(player, board), key=score_move)
     return strategy
+
+SQUARE_WEIGHTS = [
+    0,   0,   0,   0,   0,   0,   0,   0,   0,   0,
+    0, 120, -20,  20,   5,   5,  20, -20, 120,   0,
+    0, -20, -40,  -5,  -5,  -5,  -5, -40, -20,   0,
+    0,  20,  -5,  15,   3,   3,  15,  -5,  20,   0,
+    0,   5,  -5,   3,   3,   3,   3,  -5,   5,   0,
+    0,   5,  -5,   3,   3,   3,   3,  -5,   5,   0,
+    0,  20,  -5,  15,   3,   3,  15,  -5,  20,   0,
+    0, -20, -40,  -5,  -5,  -5,  -5, -40, -20,   0,
+    0, 120, -20,  20,   5,   5,  20, -20, 120,   0,
+    0,   0,   0,   0,   0,   0,   0,   0,   0,   0,
+]
