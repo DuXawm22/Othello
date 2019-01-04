@@ -92,3 +92,15 @@ def score(player, board):
         if piece == player: mine += 1
         elif piece == opp: theirs += 1
     return mine - theirs
+
+import random
+
+def random_strategy(player, board):
+    return random.choice(legal_moves(player, board))
+
+def maximizer(evaluate):
+    def strategy(player, board):
+        def score_move(move):
+            return evaluate(player, make_move(move, player, list(board)))
+        return max(legal_moves(player, board), key=score_move)
+    return strategy
